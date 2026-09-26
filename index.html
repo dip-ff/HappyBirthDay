@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Surprise 💌</title>
+  
+  <!-- Romantic Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-pink: #ff4d79;
+      --deep-purple: #170724;
+      --glow-gold: #ffd166;
+      --card-bg: rgba(28, 12, 38, 0.92);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 30%, #3a1042 0%, #1a0524 60%, #0c0211 100%);
+      font-family: 'Hind Siliguri', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    #starCanvas, #celebrationCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #starCanvas { z-index: 1; }
+    #celebrationCanvas { z-index: 99; }
+
+    .main-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 35px 16px;
+    }
+
+    /* =========================================
+       STAGE 1: 3D ENVELOPE
+    ========================================= */
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      cursor: pointer;
+      perspective: 1200px;
+      transition: transform 0.6s ease, opacity 0.8s ease;
+      filter: drop-shadow(0 15px 35px rgba(255, 77, 121, 0.35));
+      animation: floatEnvelope 3.5s ease-in-out infinite;
+    }
+
+    @keyframes floatEnvelope {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(0.8deg); }
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #731238;
+      border-radius: 12px;
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.4);
+      transform-style: preserve-3d;
+      border: 1px solid rgba(255, 140, 175, 0.3);
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 115px solid #991a4c;
+      transform-origin: top center;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5;
+    }
+
+    .pocket {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid #80153f;
+      border-right: 160px solid #80153f;
+      border-bottom: 110px solid #630f30;
+      border-top: 110px solid transparent;
+      border-radius: 0 0 12px 12px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .envelope-stamp {
+      position: absolute;
+      top: 95px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
+      background: radial-gradient(circle, #ffd700, #ff8c00);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.6);
+      z-index: 6;
+      transition: opacity 0.4s ease;
+    }
+
+    .env-post-stamp {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: #fff;
+      padding: 3px 7px;
+      border: 2px dashed #ff4d79;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #991a4c;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      z-index: 6;
+      transform: rotate(6deg);
+    }
+
+    .envelope-text {
+      position: absolute;
+      bottom: 16px;
+      width: 100%;
+      text-align: center;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: #ffe6ef;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      z-index: 7;
+    }
+
+    .tap-hint {
+      margin-top: 28px;
+      font-size: 15px;
+      color: #ffb8d2;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 9px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 140, 175, 0.3);
+      backdrop-filter: blur(8px);
+      animation: pulseGlow 1.8s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 105, 150, 0.3); transform: scale(1); }
+      50% { box-shadow: 0 0 22px rgba(255, 105, 150, 0.7); transform: scale(1.04); }
+    }
+
+    .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+    .envelope-wrapper.open .envelope-stamp { opacity: 0; }
+
+    /* =========================================
+       STAGE 2: GENUINE 3D BLOOMING ROSE
+    ========================================= */
+    .rose-stage-3d {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.1);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      transform-style: preserve-3d;
+      transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .rose-stage-3d.active { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    .rose-stage-3d.shrink-up { transform: translate(-50%, -190px) scale(0.62); opacity: 0.95; }
+
+    .rose-container-3d {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      transform-style: preserve-3d;
+      transform: rotateX(-20deg) rotateY(25deg);
+      animation: rotateFlower 10s infinite linear;
+    }
+
+    @keyframes rotateFlower {
+      0% { transform: rotateX(-18deg) rotateY(0deg); }
+      50% { transform: rotateX(-24deg) rotateY(180deg); }
+      100% { transform: rotateX(-18deg) rotateY(360deg); }
+    }
+
+    .rose-3d-aura {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 42, 95, 0.45) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: pulseAura 2s infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes pulseAura {
+      from { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+      to { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+    }
+
+    .petal-3d {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      border-radius: 50% 50% 35% 35%;
+      box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5), 0 0 8px rgba(255, 30, 80, 0.3);
+      transition: transform 2.2s cubic-bezier(0.2, 0.9, 0.3, 1), background 1.5s ease;
+      backface-visibility: visible;
+    }
+
+    .sepal-3d {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 22px;
+      height: 50px;
+      background: linear-gradient(to top, #1e5c22, #388e3c);
+      transform-origin: bottom center;
+      border-radius: 50% 50% 10% 10%;
+      transition: transform 2s ease;
+    }
+
+    .stem-3d {
+      position: absolute;
+      top: 70px;
+      left: 67px;
+      width: 6px;
+      height: 120px;
+      background: linear-gradient(to right, #1b4d1e, #2e7d32, #1b4d1e);
+      border-radius: 4px;
+      transform: rotateX(90deg);
+      transform-origin: top center;
+    }
+
+    /* =========================================
+       STAGE 3: LETTER CARD & PANDA STICKERS
+    ========================================= */
+    .letter-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 180, 210, 0.3);
+      border-radius: 26px;
+      padding: 40px 24px 30px 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 77, 121, 0.25);
+      backdrop-filter: blur(18px);
+      text-align: center;
+      display: none;
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      margin-top: 25px;
+    }
+
+    .letter-card.visible { display: block; opacity: 1; transform: translateY(0) scale(1); }
+
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 120px;
+      height: 26px;
+      background: rgba(255, 182, 193, 0.75);
+      border-left: 2px dashed rgba(255, 255, 255, 0.6);
+      border-right: 2px dashed rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      backdrop-filter: blur(4px);
+      z-index: 20;
+    }
+
+    .panda-sticker {
+      position: absolute;
+      background: #ffffff;
+      border: 3.5px solid #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 105, 180, 0.35);
+      cursor: pointer;
+      z-index: 25;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: stickerBob 3.5s ease-in-out infinite alternate;
+    }
+
+    .panda-sticker img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .panda-sticker:hover, .panda-sticker:active { transform: scale(1.22) rotate(6deg) !important; }
+
+    @keyframes stickerBob {
+      0% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+      100% { transform: translateY(-8px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+    }
+
+    .panda-sticker.wiggling { animation: stickerWiggle 0.5s ease !important; }
+    @keyframes stickerWiggle {
+      0%, 100% { transform: scale(1.15) rotate(0deg); }
+      25% { transform: scale(1.25) rotate(-14deg); }
+      75% { transform: scale(1.25) rotate(14deg); }
+    }
+
+    .stk-kiss { --rot: -10deg; top: -30px; left: -14px; width: 72px; height: 72px; }
+    .stk-hug { --rot: 12deg; top: -28px; right: -12px; width: 74px; height: 74px; }
+    .stk-dance { --rot: -8deg; bottom: -22px; left: -14px; width: 70px; height: 70px; }
+    .stk-cuddle { --rot: 10deg; bottom: -22px; right: -14px; width: 72px; height: 72px; }
+
+    .card-rose-badge {
+      width: 60px;
+      height: 60px;
+      margin: -60px auto 10px auto;
+      filter: drop-shadow(0 0 15px rgba(255, 75, 120, 0.8));
+      animation: miniBounce 3s ease-in-out infinite;
+    }
+
+    @keyframes miniBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    .hbd-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 44px;
+      color: #ff99bb;
+      text-shadow: 0 0 16px rgba(255, 105, 150, 0.8);
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .recipient-name {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(120deg, #fff, #ffd166, #ff758c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+      display: inline-block;
+      position: relative;
+      padding-bottom: 6px;
+    }
+
+    .recipient-name::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      width: 70%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ff758c, transparent);
+    }
+
+    .typed-content {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #fae8f0;
+      text-align: left;
+      min-height: 160px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-weight: 400;
+      background: rgba(255, 255, 255, 0.035);
+      padding: 18px;
+      border-radius: 16px;
+      border-left: 3.5px solid #ff4d79;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #ff758c;
+      vertical-align: text-bottom;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* =========================================
+       STAGE 4 & 5: BUTTON & MODAL
+    ========================================= */
+    .wish-btn-container {
+      margin-top: 25px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(15px);
+    }
+
+    .wish-btn-container.show { display: block; opacity: 1; transform: translateY(0); }
+
+    .wish-btn {
+      position: relative;
+      background: linear-gradient(135deg, #ff4d79, #9c1d68);
+      color: #fff;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 14px 44px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 77, 121, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .wish-btn:hover, .wish-btn:active {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(255, 77, 121, 0.95);
+    }
+
+    .final-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      background: rgba(30, 8, 40, 0.97);
+      border: 2px solid #ffd166;
+      border-radius: 26px;
+      padding: 26px 20px;
+      text-align: center;
+      width: 88%;
+      max-width: 400px;
+      z-index: 100;
+      box-shadow: 0 0 45px rgba(255, 209, 102, 0.55);
+      opacity: 0;
+      pointer-events: none;
+      backdrop-filter: blur(20px);
+      transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .final-modal.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .final-modal-panda {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 14px auto;
+      border-radius: 22px;
+      background: #ffffff;
+      padding: 6px;
+      border: 3.5px solid #ff758c;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .final-modal-panda img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
+    .final-modal-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.5;
+      text-shadow: 0 0 12px rgba(255, 117, 140, 0.8);
+    }
+    .final-modal-sub { font-size: 15px; color: #ffd6e4; margin-top: 8px; }
+
+    /* ==========================================================
+       STAGE 6: LUXURY REALISTIC CAKE STAGE (NO CARTOONS)
+    ========================================================== */
+    .cake-cutting-stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 40%, #300c3b 0%, #15031f 70%, #08000d 100%);
+      backdrop-filter: blur(25px);
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .cake-cutting-stage.active { display: flex; opacity: 1; }
+
+    .hbd-song-banner {
+      font-family: 'Great Vibes', cursive;
+      font-size: 46px;
+      color: #ffd166;
+      text-shadow: 0 0 20px rgba(255, 209, 102, 0.9), 0 0 45px #ff4d79;
+      text-align: center;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+
+    .hbd-song-banner.revealed { opacity: 1; transform: scale(1); }
+
+    .musical-notes {
+      font-size: 28px;
+      animation: noteBounce 1.5s infinite alternate;
+      display: inline-block;
+    }
+    @keyframes noteBounce {
+      0% { transform: translateY(0) rotate(-10deg); }
+      100% { transform: translateY(-8px) rotate(15deg); }
+    }
+
+    /* Cake Stage Center View */
+    .cake-scene {
+      position: relative;
+      width: 320px;
+      height: 290px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Soft Realistic Breeze when blowing candle */
+    .air-breeze {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 35;
+      transition: all 0.6s ease-out;
+    }
+
+    .air-breeze.blowing {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.6);
+    }
+
+    /* Tap/Touch Guide on Cake */
+    .touch-indicator {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      z-index: 45;
+      opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 0 12px #ffd166);
+      animation: tapBounce 1.1s infinite alternate;
+    }
+    .touch-indicator.show { opacity: 1; }
+
+    @keyframes tapBounce {
+      0% { transform: translateX(-50%) translateY(0) scale(1); }
+      100% { transform: translateX(-50%) translateY(16px) scale(1.2); }
+    }
+
+    /* Luxury Split Cake Wrapper */
+    .split-cake-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      cursor: pointer;
+      z-index: 10;
+      filter: drop-shadow(0 20px 35px rgba(0,0,0,0.65));
+      transition: transform 0.3s ease;
+    }
+
+    /* Cake Halves */
+    .cake-half {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+    }
+
+    .cake-half.left { align-items: flex-end; }
+    .cake-half.right { align-items: flex-start; }
+
+    /* Split Physics */
+    .cake-half.left.split {
+      transform: translateX(-35px) rotate(-5deg);
+    }
+    .cake-half.right.split {
+      transform: translateX(35px) rotate(5deg);
+    }
+
+    /* REALISTIC TOP TIER (Belgian Chocolate & Rose Glaze) */
+    .top-tier-half {
+      width: 72px;
+      height: 64px;
+      position: relative;
+      background: linear-gradient(135deg, #e6005c 0%, #a0003b 50%, #4a001a 100%);
+      box-shadow: inset 0 4px 6px rgba(255,255,255,0.3), inset 0 -6px 12px rgba(0,0,0,0.4);
+    }
+
+    .cake-half.left .top-tier-half {
+      border-radius: 16px 0 0 4px;
+      border-right: 2px dashed rgba(255, 230, 235, 0.6);
+    }
+    .cake-half.right .top-tier-half {
+      border-radius: 0 16px 4px 0;
+      border-left: 2px dashed rgba(255, 230, 235, 0.6);
+    }
+
+    /* Glossy Dripping Icing */
+    .chocolate-drip {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 24px;
+      background: linear-gradient(to bottom, #2b0c14, #4a001a);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .cake-half.left .chocolate-drip { border-radius: 16px 0 10px 0; }
+    .cake-half.right .chocolate-drip { border-radius: 0 16px 0 10px; }
+
+    /* Fresh Cream Swirls + Glossy Cherries on Top */
+    .cream-rosette {
+      position: absolute;
+      top: -12px;
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ffedf2 60%, #e8bcc8 100%);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 12;
+    }
+
+    .cherry {
+      position: absolute;
+      top: -8px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 35% 30%, #ff6685 0%, #d6002f 55%, #590011 100%);
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset -1px -1px 3px rgba(0,0,0,0.6);
+    }
+    .cherry::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      right: 2px;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid #5a8a30;
+      border-right: 2px solid #5a8a30;
+      border-radius: 0 50% 0 0;
+    }
+
+    .cake-half.left .cream-rosette { right: 14px; }
+    .cake-half.right .cream-rosette { left: 14px; }
+
+    /* REALISTIC BOTTOM TIER (Multi-Layer Moist Sponge & Cream Inside) */
+    .bottom-tier-half {
+      width: 106px;
+      height: 82px;
+      margin-top: 2px;
+      position: relative;
+      /* Default outside velvet frosting */
+      background: linear-gradient(135deg, #fff0f5 0%, #ffccd9 60%, #e6a8b8 100%);
+      box-shadow: inset 0 -8px 15px rgba(0,0,0,0.2);
+    }
+
+    .cake-half.left .bottom-tier-half {
+      border-radius: 18px 0 0 8px;
+      border-right: 3px solid #730f2c;
+      /* Cross section sponge layers visible when split */
+      background: repeating-linear-gradient(
+        to bottom,
+        #3d141d 0px, #3d141d 15px,       /* Dark Chocolate Sponge */
+        #ffffff 15px, #ffffff 21px,       /* Vanilla Velvet Buttercream */
+        #c4003f 21px, #c4003f 24px,       /* Strawberry Glaze */
+        #3d141d 24px, #3d141d 40px,       /* Middle Sponge */
+        #ffffff 40px, #ffffff 46px,       /* Buttercream */
+        #3d141d 46px, #3d141d 62px,       /* Base Sponge */
+        #ffffff 62px, #ffffff 68px,       /* Bottom Cream */
+        #3d141d 68px, #3d141d 82px        /* Sponge Base */
+      );
+    }
+
+    .cake-half.right .bottom-tier-half {
+      border-radius: 0 18px 8px 0;
+      border-left: 3px solid #730f2c;
+      background: repeating-linear-gradient(
+        to bottom,
+        #3d141d 0px, #3d141d 15px,
+        #ffffff 15px, #ffffff 21px,
+        #c4003f 21px, #c4003f 24px,
+        #3d141d 24px, #3d141d 40px,
+        #ffffff 40px, #ffffff 46px,
+        #3d141d 46px, #3d141d 62px,
+        #ffffff 62px, #ffffff 68px,
+        #3d141d 68px, #3d141d 82px
+      );
+    }
+
+    /* REALISTIC BIRTHDAY CANDLE */
+    .candle {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 52px;
+      background: repeating-linear-gradient(45deg, #ffd700, #ffd700 6px, #ffffff 6px, #ffffff 12px);
+      border-radius: 4px;
+      z-index: 20;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+      transition: opacity 0.5s ease;
+    }
+
+    .candle-wick {
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 8px;
+      background: #333;
+    }
+
+    .candle-flame {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 26px;
+      background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #ffd166 35%, #ff4d00 75%, transparent 100%);
+      border-radius: 50% 50% 35% 35%;
+      box-shadow: 0 0 16px #ffd166, 0 0 35px #ff5e36, 0 0 60px rgba(255, 77, 0, 0.6);
+      animation: flameFlicker 0.6s infinite alternate ease-in-out;
+      transform-origin: bottom center;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: translateX(-50%) rotate(-3deg) scale(1); }
+      100% { transform: translateX(-50%) rotate(3deg) scale(1.12); }
+    }
+
+    .candle-smoke {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease, transform 1.2s ease;
+    }
+    .candle-smoke.rise { opacity: 0.85; transform: translate(-50%, -38px) scale(1.6); }
+
+    /* REALISTIC GOLDEN RIM MARBLE CAKE STAND */
+    .cake-plate {
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 250px;
+      height: 18px;
+      background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 60%, #b3b3b3 100%);
+      border: 2px solid #ffd166;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 15px rgba(255, 209, 102, 0.4);
+      z-index: 5;
+    }
+    .cake-plate::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 14px;
+      background: linear-gradient(to right, #b3b3b3, #ffffff, #b3b3b3);
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* REALISTIC CHEF SLICING KNIFE */
+    .cake-knife {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-35deg);
+      font-size: 52px;
+      opacity: 0;
+      transition: all 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 35;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
+    }
+    .cake-knife.slice-down {
+      opacity: 1;
+      transform: translateX(-50%) translateY(125px) rotate(0deg);
+    }
+
+    /* Interactive Buttons for Cake */
+    .cake-action-container {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 50;
+    }
+
+    .cake-btn {
+      background: linear-gradient(135deg, #ffd166, #ff4d79);
+      color: #170724;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      padding: 14px 44px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 209, 102, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .cake-btn:hover, .cake-btn:active {
+      transform: scale(1.06);
+      box-shadow: 0 0 35px rgba(255, 209, 102, 1);
+    }
+
+    .cake-status-msg {
+      font-size: 17px;
+      font-weight: 600;
+      color: #ffe6ef;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      min-height: 28px;
+      text-align: center;
+    }
+
+    @media (max-width: 420px) {
+      .envelope-wrapper { width: 280px; height: 190px; }
+      .flap { border-left-width: 140px; border-right-width: 140px; border-top-width: 100px; }
+      .pocket { border-left-width: 140px; border-right-width: 140px; border-bottom-width: 95px; border-top-width: 95px; }
+      .hbd-title { font-size: 38px; }
+      .typed-content { font-size: 14.5px; }
+      .panda-sticker { width: 62px; height: 62px; }
+      .hbd-song-banner { font-size: 38px; }
+      .cake-scene { width: 290px; height: 260px; }
+      .top-tier-half { width: 62px; height: 56px; }
+      .bottom-tier-half { width: 92px; height: 72px; }
+      .cake-plate { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="starCanvas"></canvas>
+  <canvas id="celebrationCanvas"></canvas>
+
+  <div class="main-container">
+    
+    <!-- STAGE 1: ENVELOPE -->
+    <div id="envelopeSection" style="display: flex; flex-direction: column; align-items: center; position: relative;">
+      <div class="envelope-wrapper" id="envelopeBtn">
+        <div class="envelope">
+          <div class="flap"></div>
+          <div class="pocket"></div>
+          <div class="envelope-stamp">💖</div>
+          <div class="env-post-stamp">💌 AIR MAIL<br><span style="font-size:8px; color:#ff4d79;">SPECIAL FOR YOU</span></div>
+          <div class="envelope-text">তোমার জন্য একটি ছোট্ট চিঠি 💌</div>
+        </div>
+      </div>
+      <div class="tap-hint" id="tapHintBtn">চিঠি খুলতে এখানে চাপ দাও ✨</div>
+    </div>
+
+    <!-- STAGE 2: 3D BLOOMING ROSE -->
+    <div class="rose-stage-3d" id="roseStage3D">
+      <div class="rose-3d-aura"></div>
+      <div class="rose-container-3d" id="roseFlower3D">
+        <div class="stem-3d"></div>
+      </div>
+    </div>
+
+    <!-- STAGE 3: LETTER CARD WITH ANIMATED BUBU & DUDU STICKERS -->
+    <div class="letter-card" id="letterCard">
+      <div class="washi-tape"></div>
+
+      <!-- 1. Bubu blowing kisses -->
+      <div class="panda-sticker stk-kiss" title="Cute Panda Kiss!">
+        <img src="https://media.tenor.com/i_up89-u8ocAAAAM/bubu-dudu-kisses.gif" alt="Panda Blowing Kiss" />
+      </div>
+
+      <!-- 2. Bubu & Dudu warm hug -->
+      <div class="panda-sticker stk-hug" title="Warm Hugs!">
+        <img src="https://media.tenor.com/hl6-At7irm4AAAAi/bubu-dudu.gif" alt="Panda Hug" />
+      </div>
+
+      <!-- 3. Happy dancing panda -->
+      <div class="panda-sticker stk-dance" title="Happy Dance!">
+        <img src="https://media.tenor.com/mS2apowGKXwAAAAM/bubu-dudu-bubu.gif" alt="Panda Dance" />
+      </div>
+
+      <!-- 4. Sweet cuddle sticker -->
+      <div class="panda-sticker stk-cuddle" title="Cute Love!">
+        <img src="https://media.tenor.com/QYeYet2tgIUAAAAj/bubu-dudu.gif" alt="Panda Cuddle" />
+      </div>
+
+      <!-- Top Badge Rose -->
+      <div class="card-rose-badge">
+        <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+          <circle cx="50" cy="50" r="45" fill="rgba(255, 77, 121, 0.18)" />
+          <path d="M 50,75 C 30,60 25,35 42,25 C 55,18 62,32 50,75 Z" fill="#ff1a53"/>
+          <path d="M 50,75 C 70,60 75,35 58,25 C 45,18 38,32 50,75 Z" fill="#e60039"/>
+          <circle cx="50" cy="38" r="12" fill="#ff4d79"/>
+        </svg>
+      </div>
+
+      <h1 class="hbd-title">Happy Birthday 🎂❤️</h1>
+      <h2 class="recipient-name">ছোট ভাই 💖</h2>
+
+      <!-- Typewriter Container -->
+      <div class="typed-content">
+        <span id="typewriterText"></span><span class="cursor" id="typewriterCursor"></span>
+      </div>
+
+      <!-- STAGE 4: GLOWING BUTTON -->
+      <div class="wish-btn-container" id="wishBtnContainer">
+        <button class="wish-btn" id="makeWishBtn">Make a Wish ✨</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STAGE 5: FINAL CELEBRATION MODAL -->
+  <div class="final-modal" id="finalModal">
+    <div class="final-modal-panda">
+      <img src="https://media1.tenor.com/m/jhVNIStBHy0AAAAd/bubu-dudu-birthday.gif" alt="Bubu Dudu Birthday Cake Celebration" />
+    </div>
+    <div class="final-modal-text">“তোমার মনের সব ইচ্ছে পূরণ হোক। ❤️✨”</div>
+    <div class="final-modal-sub">তোমার প্রতিটি দিন ভরে উঠুক অফুরন্ত ভালোবাসায়! 🌸</div>
+    <button class="wish-btn" id="goToCakeBtn" style="margin-top: 18px; padding: 10px 28px; font-size: 16px;">
+      এবার কেক কাটার পালা! 🎂✨
+    </button>
+  </div>
+
+  <!-- STAGE 6: FULLSCREEN REALISTIC CAKE STAGE (CLEAN & ROMANTIC) -->
+  <div class="cake-cutting-stage" id="cakeCuttingStage">
+    
+    <!-- "Happy Birthday To You" Banner -->
+    <div class="hbd-song-banner" id="hbdSongBanner">
+      <span class="musical-notes">🎵</span> Happy Birthday To You! <span class="musical-notes">🎶</span>
+    </div>
+
+    <!-- The Realistic Cake Scene -->
+    <div class="cake-scene">
+      <!-- Soft Wind Breeze Effect -->
+      <div class="air-breeze" id="airBreeze">🌬️✨</div>
+
+      <!-- Slicing Knife Animation -->
+      <div class="cake-knife" id="cakeKnife">🔪</div>
+
+      <!-- Touch Guide for User -->
+      <div class="touch-indicator" id="touchIndicator">👆</div>
+
+      <!-- Interactive Split-Cake Structure (No Cartoons) -->
+      <div class="split-cake-wrapper" id="splitCakeWrapper" title="কেকের ওপর আঙুল দিয়ে টাচ করো!">
+        <!-- Slender Birthday Candle in center -->
+        <div class="candle" id="mainCandle">
+          <div class="candle-wick"></div>
+          <div class="candle-flame" id="candleFlame"></div>
+          <div class="candle-smoke" id="candleSmoke">💨</div>
+        </div>
+
+        <!-- Left Half of Gourmet Cake -->
+        <div class="cake-half left" id="cakeHalfLeft">
+          <div class="top-tier-half">
+            <div class="chocolate-drip"></div>
+            <div class="cream-rosette"><div class="cherry"></div></div>
+          </div>
+          <div class="bottom-tier-half"></div>
+        </div>
+
+        <!-- Right Half of Gourmet Cake -->
+        <div class="cake-half right" id="cakeHalfRight">
+          <div class="top-tier-half">
+            <div class="chocolate-drip"></div>
+            <div class="cream-rosette"><div class="cherry"></div></div>
+          </div>
+          <div class="bottom-tier-half"></div>
+        </div>
+
+        <!-- Luxury Marble Cake Stand -->
+        <div class="cake-plate"></div>
+      </div>
+    </div>
+
+    <!-- Action Buttons & Status -->
+    <div class="cake-action-container">
+      <div class="cake-status-msg" id="cakeStatusMsg">মোমবাতিটি নিভিয়ে উইশ পূরণ করো! ✨</div>
+      <button class="cake-btn" id="cakeActionBtn">মোমবাতিতে ফু দাও 🌬️🕯️</button>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================================
+       1. 3D PETALS GENERATION & BLOOM ENGINE
+    ========================================================== */
+    const roseFlower3D = document.getElementById('roseFlower3D');
+
+    const layers = [
+      { count: 5, w: 22, h: 50, budTilt: 25, bloomTilt: 90, type: 'sepal', tz: -5 },
+      { count: 9, w: 46, h: 62, budTilt: 22, bloomTilt: 75, type: 'petal', bg: 'radial-gradient(circle at 50% 35%, #ff2a5f 0%, #b3002d 70%, #590014 100%)', tz: 0 },
+      { count: 8, w: 38, h: 54, budTilt: 16, bloomTilt: 50, type: 'petal', bg: 'radial-gradient(circle at 50% 35%, #ff4d79 0%, #c40032 70%, #70001a 100%)', tz: 6 },
+      { count: 6, w: 28, h: 44, budTilt: 10, bloomTilt: 28, type: 'petal', bg: 'radial-gradient(circle at 50% 35%, #ff668a 0%, #d60037 70%, #8c0022 100%)', tz: 12 }
+    ];
+
+    const petalElements = [];
+
+    layers.forEach((layer) => {
+      const angleStep = 360 / layer.count;
+      for (let i = 0; i < layer.count; i++) {
+        const el = document.createElement('div');
+        const rotY = (i * angleStep) + (layer.tz * 7);
+
+        if (layer.type === 'sepal') {
+          el.className = 'sepal-3d';
+          el.style.width = layer.w + 'px';
+          el.style.height = layer.h + 'px';
+          el.style.marginLeft = (-layer.w / 2) + 'px';
+          el.style.marginTop = (-layer.h) + 'px';
+        } else {
+          el.className = 'petal-3d';
+          el.style.width = layer.w + 'px';
+          el.style.height = layer.h + 'px';
+          el.style.marginLeft = (-layer.w / 2) + 'px';
+          el.style.marginTop = (-layer.h) + 'px';
+          el.style.background = layer.bg;
+        }
+
+        el.style.transform = `rotateY(${rotY}deg) rotateX(${layer.budTilt}deg) translateZ(${layer.tz}px)`;
+        roseFlower3D.appendChild(el);
+        petalElements.push({ el, rotY, bloomTilt: layer.bloomTilt, tz: layer.tz });
+      }
+    });
+
+    function bloomRose3D() {
+      petalElements.forEach((p, index) => {
+        setTimeout(() => {
+          p.el.style.transform = `rotateY(${p.rotY}deg) rotateX(${p.bloomTilt}deg) translateZ(${p.tz}px)`;
+        }, index * 20);
+      });
+    }
+
+    /* ==========================================================
+       2. BACKGROUND PARTICLES
+    ========================================================== */
+    const starCanvas = document.getElementById('starCanvas');
+    const sCtx = starCanvas.getContext('2d');
+    let stars = [];
+
+    function resizeStarCanvas() {
+      starCanvas.width = window.innerWidth;
+      starCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeStarCanvas);
+    resizeStarCanvas();
+
+    class Star {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * starCanvas.width;
+        this.y = Math.random() * starCanvas.height;
+        this.size = Math.random() * 2 + 0.6;
+        this.alpha = Math.random() * 0.7 + 0.2;
+        this.speed = Math.random() * 0.02 + 0.008;
+        this.dir = Math.random() > 0.5 ? 1 : -1;
+      }
+      update() {
+        this.alpha += this.speed * this.dir;
+        if (this.alpha > 0.95 || this.alpha < 0.15) this.dir *= -1;
+      }
+      draw() {
+        sCtx.beginPath();
+        sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        sCtx.fillStyle = `rgba(255, 215, 235, ${this.alpha})`;
+        sCtx.shadowBlur = 8;
+        sCtx.shadowColor = '#ff80bf';
+        sCtx.fill();
+        sCtx.shadowBlur = 0;
+      }
+    }
+    for (let i = 0; i < 70; i++) stars.push(new Star());
+
+    function animateStars() {
+      sCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      stars.forEach(s => { s.update(); s.draw(); });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+
+    /* ==========================================================
+       3. SURPRISE TIMELINE
+    ========================================================== */
+    const envelopeSection = document.getElementById('envelopeSection');
+    const envelopeWrapper = document.getElementById('envelopeBtn');
+    const tapHintBtn = document.getElementById('tapHintBtn');
+    const roseStage3D = document.getElementById('roseStage3D');
+    const letterCard = document.getElementById('letterCard');
+    const typewriterText = document.getElementById('typewriterText');
+    const typewriterCursor = document.getElementById('typewriterCursor');
+    const wishBtnContainer = document.getElementById('wishBtnContainer');
+    const makeWishBtn = document.getElementById('makeWishBtn');
+    const finalModal = document.getElementById('finalModal');
+    const goToCakeBtn = document.getElementById('goToCakeBtn');
+
+    let sequenceStarted = false;
+
+    function openEnvelopeSequence() {
+      if (sequenceStarted) return;
+      sequenceStarted = true;
+
+      envelopeWrapper.classList.add('open');
+      tapHintBtn.style.opacity = '0';
+      tapHintBtn.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        roseStage3D.classList.add('active');
+        createFloatingHearts(window.innerWidth / 2, window.innerHeight / 2, 12);
+      }, 700);
+
+      setTimeout(() => {
+        bloomRose3D();
+        createFloatingHearts(window.innerWidth / 2, window.innerHeight / 2, 22);
+      }, 1600);
+
+      setTimeout(() => {
+        envelopeSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        envelopeSection.style.opacity = '0';
+        envelopeSection.style.transform = 'scale(0.8)';
+        roseStage3D.classList.add('shrink-up');
+
+        setTimeout(() => {
+          envelopeSection.style.display = 'none';
+          roseStage3D.style.display = 'none';
+          letterCard.classList.add('visible');
+          startTypewriter();
+        }, 800);
+      }, 3800);
+    }
+
+    envelopeWrapper.addEventListener('click', openEnvelopeSequence);
+    tapHintBtn.addEventListener('click', openEnvelopeSequence);
+
+    /* ==========================================================
+       4. BENGALI TYPEWRITER
+    ========================================================== */
+    const messageBengali = 
+`আজকের এই বিশেষ দিনে তোমাকে জানাই অনেক অনেক শুভেচ্ছা ও ভালোবাসা। ❤️
+
+তোমার জীবনের প্রতিটি দিন যেন হাসি, আনন্দ এবং সুন্দর মুহূর্তে ভরে ওঠে।
+
+তোমার সব স্বপ্ন পূরণ হোক। জীবনের প্রতিটি পথে তুমি সফল হও এবং তোমার মুখের সুন্দর হাসিটা সবসময় এমনই থাকুক।
+
+তোমার এই বিশেষ দিনটি হোক তোমার জীবনের সবচেয়ে সুন্দর দিনগুলোর একটি।
+
+Happy Birthday once again! 🎂✨
+
+সবসময় ভালো থেকো, হাসিখুশি থেকো এবং নিজের যত্ন নিও। ❤️`;
+
+    function startTypewriter() {
+      let segments;
+      if (window.Intl && Intl.Segmenter) {
+        const segmenter = new Intl.Segmenter('bn', { granularity: 'grapheme' });
+        segments = Array.from(segmenter.segment(messageBengali)).map(s => s.segment);
+      } else {
+        segments = Array.from(messageBengali);
+      }
+
+      let index = 0;
+      function typeNext() {
+        if (index < segments.length) {
+          typewriterText.textContent += segments[index];
+          index++;
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          setTimeout(typeNext, 35);
+        } else {
+          typewriterCursor.style.display = 'none';
+          wishBtnContainer.classList.add('show');
+        }
+      }
+      typeNext();
+    }
+
+    /* 5. INTERACTIVE STICKERS ON LETTER */
+    document.querySelectorAll('.panda-sticker').forEach(stk => {
+      stk.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stk.classList.add('wiggling');
+        const rect = stk.getBoundingClientRect();
+        createFloatingHearts(rect.left + rect.width/2, rect.top + rect.height/2, 8);
+        setTimeout(() => stk.classList.remove('wiggling'), 500);
+      });
+    });
+
+    /* ==========================================================
+       6. CONFETTI & CELEBRATION ENGINE
+    ========================================================== */
+    const celCanvas = document.getElementById('celebrationCanvas');
+    const cCtx = celCanvas.getContext('2d');
+    let celebrationParticles = [];
+    let isCelebrating = false;
+
+    function resizeCelebrationCanvas() {
+      celCanvas.width = window.innerWidth;
+      celCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCelebrationCanvas);
+    resizeCelebrationCanvas();
+
+    const festiveColors = ['#ff4d79', '#ffd166', '#06d6a0', '#118ab2', '#ff80bf', '#ffffff', '#ff0055'];
+
+    class CelebrationParticle {
+      constructor(x, y) {
+        this.x = x || Math.random() * celCanvas.width;
+        this.y = y || -20;
+        this.size = Math.random() * 9 + 5;
+        this.color = festiveColors[Math.floor(Math.random() * festiveColors.length)];
+        this.vx = (Math.random() - 0.5) * 6;
+        this.vy = Math.random() * 4 + 3;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 8;
+        this.type = Math.random() > 0.4 ? 'confetti' : (Math.random() > 0.5 ? 'heart' : 'sparkle');
+        this.alpha = 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+        if (this.y > celCanvas.height + 30) {
+          this.y = -20;
+          this.x = Math.random() * celCanvas.width;
+        }
+      }
+      draw() {
+        cCtx.save();
+        cCtx.translate(this.x, this.y);
+        cCtx.rotate((this.rotation * Math.PI) / 180);
+        cCtx.fillStyle = this.color;
+        cCtx.globalAlpha = this.alpha;
+
+        if (this.type === 'confetti') {
+          cCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+        } else if (this.type === 'heart') {
+          const h = this.size * 0.8;
+          cCtx.beginPath();
+          cCtx.moveTo(0, 0);
+          cCtx.bezierCurveTo(-h, -h, -h * 1.4, h * 0.4, 0, h * 1.2);
+          cCtx.bezierCurveTo(h * 1.4, h * 0.4, h, -h, 0, 0);
+          cCtx.fill();
+        } else {
+          cCtx.beginPath();
+          cCtx.arc(0, 0, this.size * 0.4, 0, Math.PI * 2);
+          cCtx.fill();
+        }
+        cCtx.restore();
+      }
+    }
+
+    function triggerCelebration() {
+      isCelebrating = true;
+      celebrationParticles = [];
+      for (let i = 0; i < 200; i++) {
+        celebrationParticles.push(new CelebrationParticle(Math.random() * celCanvas.width, Math.random() * celCanvas.height - 200));
+      }
+      animateCelebration();
+    }
+
+    function animateCelebration() {
+      if (!isCelebrating) return;
+      cCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
+      celebrationParticles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateCelebration);
+    }
+
+    function createFloatingHearts(x, y, count) {
+      for (let i = 0; i < count; i++) {
+        const p = new CelebrationParticle(x + (Math.random() - 0.5) * 60, y + (Math.random() - 0.5) * 60);
+        p.type = 'heart';
+        p.vy = -Math.random() * 3 - 1.5;
+        p.vx = (Math.random() - 0.5) * 4;
+        celebrationParticles.push(p);
+      }
+      if (!isCelebrating) {
+        isCelebrating = true;
+        animateCelebration();
+        setTimeout(() => {
+          if (!finalModal.classList.contains('show') && !cakeCuttingStage.classList.contains('active')) {
+            celebrationParticles = [];
+            cCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
+          }
+        }, 2200);
+      }
+    }
+
+    /* 7. MAKE A WISH ACTION */
+    makeWishBtn.addEventListener('click', () => {
+      triggerCelebration();
+      setTimeout(() => { finalModal.classList.add('show'); }, 500);
+    });
+
+    /* ==========================================================
+       8. STAGE 6: CLEAN REALISTIC CAKE CUTTING (NO CARTOONS)
+    ========================================================== */
+    const cakeCuttingStage = document.getElementById('cakeCuttingStage');
+    const cakeActionBtn = document.getElementById('cakeActionBtn');
+    const candleFlame = document.getElementById('candleFlame');
+    const candleSmoke = document.getElementById('candleSmoke');
+    const airBreeze = document.getElementById('airBreeze');
+    const hbdSongBanner = document.getElementById('hbdSongBanner');
+    const cakeStatusMsg = document.getElementById('cakeStatusMsg');
+    const cakeKnife = document.getElementById('cakeKnife');
+    const cakeHalfLeft = document.getElementById('cakeHalfLeft');
+    const cakeHalfRight = document.getElementById('cakeHalfRight');
+    const splitCakeWrapper = document.getElementById('splitCakeWrapper');
+    const touchIndicator = document.getElementById('touchIndicator');
+    const mainCandle = document.getElementById('mainCandle');
+
+    let cakeStageStep = 'blow'; // 'blow' -> 'readyToCut' -> 'finished'
+
+    // Transition from Final Wish Modal to Cake Stage
+    goToCakeBtn.addEventListener('click', () => {
+      finalModal.classList.remove('show');
+      cakeCuttingStage.classList.add('active');
+    });
+
+    // Step 1: Blow Candle with button
+    cakeActionBtn.addEventListener('click', () => {
+      if (cakeStageStep === 'blow') {
+        cakeActionBtn.disabled = true;
+        airBreeze.classList.add('blowing');
+
+        setTimeout(() => {
+          // Flame goes out, smoke rises elegantly
+          candleFlame.style.opacity = '0';
+          candleFlame.style.transform = 'translateX(-50%) scale(0.2)';
+          candleSmoke.classList.add('rise');
+          airBreeze.classList.remove('blowing');
+
+          // Reveal "Happy Birthday To You"
+          setTimeout(() => {
+            hbdSongBanner.classList.add('revealed');
+            triggerCelebration();
+
+            // Setup Touch Slicing Instruction
+            cakeStatusMsg.innerHTML = "✨ এবার তোমার <b>আঙুল দিয়ে কেকের ওপর টাচ বা সোয়াইপ করো</b>! 👆🍰";
+            cakeActionBtn.textContent = "আঙুল দিয়ে কেক স্পর্শ করো 👆";
+            touchIndicator.classList.add('show');
+            cakeStageStep = 'readyToCut';
+          }, 600);
+        }, 750);
+
+      } else if (cakeStageStep === 'readyToCut') {
+        executeCakeSlice();
+      } else if (cakeStageStep === 'finished') {
+        triggerCelebration();
+        createFloatingHearts(window.innerWidth / 2, window.innerHeight / 2, 25);
+      }
+    });
+
+    // Step 2: Finger Touch cuts and splits cake apart
+    function executeCakeSlice() {
+      if (cakeStageStep !== 'readyToCut') return;
+      cakeStageStep = 'finished';
+
+      // Haptic phone vibration if supported
+      if (navigator.vibrate) {
+        navigator.vibrate([60, 50, 70]);
+      }
+
+      touchIndicator.classList.remove('show');
+
+      // Knife smoothly slides down
+      cakeKnife.classList.add('slice-down');
+
+      setTimeout(() => {
+        // Fade candle & realistically split the two halves
+        mainCandle.style.opacity = '0';
+        cakeHalfLeft.classList.add('split');
+        cakeHalfRight.classList.add('split');
+
+        // Confetti & Celebration
+        triggerCelebration();
+        createFloatingHearts(window.innerWidth / 2, window.innerHeight / 2, 45);
+
+        cakeStatusMsg.innerHTML = "🎉 ওয়াও! কেক কাটা সম্পন্ন হয়েছে! শুভ জন্মদিন আমার প্রিয় মানুষ! 🍰❤️";
+        cakeActionBtn.textContent = "আগামী দিনগুলো সুখের হোক ❤️✨";
+        cakeActionBtn.disabled = false;
+      }, 550);
+    }
+
+    // Touch and click listeners directly on the Cake
+    splitCakeWrapper.addEventListener('touchstart', (e) => {
+      if (cakeStageStep === 'readyToCut') {
+        e.preventDefault();
+        executeCakeSlice();
+      }
+    });
+
+    splitCakeWrapper.addEventListener('click', () => {
+      if (cakeStageStep === 'readyToCut') {
+        executeCakeSlice();
+      }
+    });
+  </script>
+</body>
+</html>
